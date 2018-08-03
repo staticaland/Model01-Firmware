@@ -82,7 +82,8 @@
   */
 
 enum { MACRO_VERSION_INFO,
-       MACRO_ANY
+       MACRO_ANY,
+       MACRO_KEYBOARD_EMOJI
      };
 
 
@@ -331,7 +332,6 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
     unicode(0x2328, keyState);
     break;
   }
-
   return MACRO_NONE;
 }
 
