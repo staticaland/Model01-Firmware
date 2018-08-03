@@ -65,7 +65,12 @@
 // Support for USB quirks, like changing the key state report protocol
 #include "Kaleidoscope-USB-Quirks.h"
 
+#include "Kaleidoscope-HostOS.h"
+
+#include "Kaleidoscope/HostOS-select.h"
+
 #include "Kaleidoscope-SpaceCadet.h"
+
 #include "Kaleidoscope-Unicode.h"
 
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
