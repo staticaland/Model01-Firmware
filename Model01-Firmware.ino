@@ -66,6 +66,7 @@
 #include "Kaleidoscope-USB-Quirks.h"
 
 #include "Kaleidoscope-SpaceCadet.h"
+#include "Kaleidoscope-Unicode.h"
 
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
   * The names aren't particularly important. What is important is that each
@@ -256,7 +257,7 @@ KEYMAPS(
    ___, Key_Delete, ___, ___,
    ___,
 
-   Consumer_ScanPreviousTrack, Key_F6,                 Key_F7,                   Key_F8,                   Key_F9,          Key_F10,          Key_F11,
+   M(MACRO_KEYBOARD_EMOJI),    Key_F6,                 Key_F7,                   Key_F8,                   Key_F9,          Key_F10,          Key_F11,
    Consumer_PlaySlashPause,    Consumer_ScanNextTrack, Key_LeftCurlyBracket,     Key_RightCurlyBracket,    Key_LeftBracket, Key_RightBracket, Key_F12,
                                Key_LeftArrow,          Key_DownArrow,            Key_UpArrow,              Key_RightArrow,  ___,              ___,
    Key_PcApplication,          Consumer_Mute,          Consumer_VolumeDecrement, Consumer_VolumeIncrement, ___,             Key_Backslash,    Key_Pipe,
@@ -271,6 +272,12 @@ KEYMAPS(
  *  When a key bound to the macro is pressed, this macro
  *  prints out the firmware build information as virtual keystrokes
  */
+
+static void unicode(uint32_t character, uint8_t keyState) {
+  if (keyToggledOn(keyState)) {
+    Unicode.type(character);
+  }
+}
 
 static void versionInfoMacro(uint8_t keyState) {
   if (keyToggledOn(keyState)) {
@@ -319,7 +326,12 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
   case MACRO_ANY:
     anyKeyMacro(keyState);
     break;
+
+  case MACRO_KEYBOARD_EMOJI:
+    unicode(0x2328, keyState);
+    break;
   }
+
   return MACRO_NONE;
 }
 
@@ -460,7 +472,8 @@ KALEIDOSCOPE_INIT_PLUGINS(
   // by BIOSes) and Report (NKRO).
   USBQuirks,
 
-  SpaceCadet
+  SpaceCadet,
+  Unicode
 );
 
 /** The 'setup' function is one of the two standard Arduino sketch functions.
