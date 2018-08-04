@@ -88,10 +88,11 @@
 
 enum { MACRO_VERSION_INFO,
        MACRO_ANY,
-       MACRO_KEYBOARD_EMOJI
+       MACRO_KEYBOARD_EMOJI,
+       COMPOSE_AA,
+       COMPOSE_AE,
+       COMPOSE_OE,
      };
-
-
 
 /** The Model 01's key layouts are defined as 'keymaps'. By default, there are three
   * keymaps: The standard QWERTY keymap, the "Function layer" keymap and the "Numpad"
@@ -135,7 +136,7 @@ enum { MACRO_VERSION_INFO,
   *
   */
 
-enum { PRIMARY, NUMPAD, FUNCTION }; // layers
+enum { PRIMARY, BOKMAL, NUMPAD, FUNCTION }; // layers
 
 
 /**
@@ -181,57 +182,6 @@ KEYMAPS(
    Key_RightShift, Key_LeftAlt, Key_Spacebar, Key_RightControl,
    ShiftToLayer(FUNCTION)),
 
-#elif defined (PRIMARY_KEYMAP_DVORAK)
-
-  [PRIMARY] = KEYMAP_STACKED
-  (___,          Key_1,         Key_2,     Key_3,      Key_4, Key_5, Key_LEDEffectNext,
-   Key_Backtick, Key_Quote,     Key_Comma, Key_Period, Key_P, Key_Y, Key_Tab,
-   Key_PageUp,   Key_A,         Key_O,     Key_E,      Key_U, Key_I,
-   Key_PageDown, Key_Semicolon, Key_Q,     Key_J,      Key_K, Key_X, Key_Escape,
-   Key_LeftControl, Key_Backspace, Key_LeftGui, Key_LeftShift,
-   ShiftToLayer(FUNCTION),
-
-   M(MACRO_ANY),   Key_6, Key_7, Key_8, Key_9, Key_0, LockLayer(NUMPAD),
-   Key_Enter,      Key_F, Key_G, Key_C, Key_R, Key_L, Key_Slash,
-                   Key_D, Key_H, Key_T, Key_N, Key_S, Key_Minus,
-   Key_RightAlt,   Key_B, Key_M, Key_W, Key_V, Key_Z, Key_Equals,
-   Key_RightShift, Key_LeftAlt, Key_Spacebar, Key_RightControl,
-   ShiftToLayer(FUNCTION)),
-
-#elif defined (PRIMARY_KEYMAP_COLEMAK) 
-
-  [PRIMARY] = KEYMAP_STACKED
-  (___,          Key_1, Key_2, Key_3, Key_4, Key_5, Key_LEDEffectNext,
-   Key_Backtick, Key_Q, Key_W, Key_F, Key_P, Key_G, Key_Tab,
-   Key_PageUp,   Key_A, Key_R, Key_S, Key_T, Key_D,
-   Key_PageDown, Key_Z, Key_X, Key_C, Key_V, Key_B, Key_Escape,
-   Key_LeftControl, Key_Backspace, Key_LeftGui, Key_LeftShift,
-   ShiftToLayer(FUNCTION),
-
-   M(MACRO_ANY),  Key_6, Key_7, Key_8,     Key_9,         Key_0,         LockLayer(NUMPAD),
-   Key_Enter,     Key_J, Key_L, Key_U,     Key_Y,         Key_Semicolon, Key_Equals,
-                  Key_H, Key_N, Key_E,     Key_I,         Key_O,         Key_Quote,
-   Key_RightAlt,  Key_K, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
-   Key_RightShift, Key_LeftAlt, Key_Spacebar, Key_RightControl,
-   ShiftToLayer(FUNCTION)),
-
-#elif defined (PRIMARY_KEYMAP_CUSTOM)
-  // Edit this keymap to make a custom layout
-  [PRIMARY] = KEYMAP_STACKED
-  (___,          Key_1, Key_2, Key_3, Key_4, Key_5, Key_LEDEffectNext,
-   Key_Backtick, Key_Q, Key_W, Key_E, Key_R, Key_T, Key_Tab,
-   Key_PageUp,   Key_A, Key_S, Key_D, Key_F, Key_G,
-   Key_PageDown, Key_Z, Key_X, Key_C, Key_V, Key_B, Key_Escape,
-   Key_LeftControl, Key_Backspace, Key_LeftGui, Key_LeftShift,
-   ShiftToLayer(FUNCTION),
-
-   M(MACRO_ANY),  Key_6, Key_7, Key_8,     Key_9,         Key_0,         LockLayer(NUMPAD),
-   Key_Enter,     Key_Y, Key_U, Key_I,     Key_O,         Key_P,         Key_Equals,
-                  Key_H, Key_J, Key_K,     Key_L,         Key_Semicolon, Key_Quote,
-   Key_RightAlt,  Key_N, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
-   Key_RightShift, Key_LeftAlt, Key_Spacebar, Key_RightControl,
-   ShiftToLayer(FUNCTION)),
-
 #else 
 
 #error "No default keymap defined. You should make sure that you have a line like '#define PRIMARY_KEYMAP_QWERTY' in your sketch"
@@ -255,6 +205,21 @@ KEYMAPS(
    ___, ___, ___, ___,
    ___),
 
+  [BOKMAL] =  KEYMAP_STACKED
+  (___, ___, ___, ___, ___, ___, ___,
+   ___, ___, ___, ___, ___, ___, ___,
+   ___, ___, ___, ___, ___, ___,
+   ___, ___, ___, ___, ___, ___, ___,
+   ___, ___, ___, ___,
+   ___,
+
+   LockLayer(BOKMAL), ___, ___, ___, ___,           ___,           ___,
+   ___,               ___, ___, ___, ___,           M(COMPOSE_AA), ___,
+                      ___, ___, ___, M(COMPOSE_OE), M(COMPOSE_AE), ___,
+   ___,               ___, ___, ___, ___,           ___,           ___,
+   ___, ___, ___, ___,
+   ___),
+
   [FUNCTION] =  KEYMAP_STACKED
   (___,      Key_F1,           Key_F2,      Key_F3,     Key_F4,        Key_F5,           Key_CapsLock,
    Key_Tab,  ___,              Key_mouseUp, ___,        Key_mouseBtnR, Key_mouseWarpEnd, Key_mouseWarpNE,
@@ -263,7 +228,7 @@ KEYMAPS(
    ___, Key_Delete, ___, ___,
    ___,
 
-   M(MACRO_KEYBOARD_EMOJI),    Key_F6,                 Key_F7,                   Key_F8,                   Key_F9,          Key_F10,          Key_F11,
+   LockLayer(BOKMAL),          Key_F6,                 Key_F7,                   Key_F8,                   Key_F9,          Key_F10,          Key_F11,
    Consumer_PlaySlashPause,    Consumer_ScanNextTrack, Key_LeftCurlyBracket,     Key_RightCurlyBracket,    Key_LeftBracket, Key_RightBracket, Key_F12,
                                Key_LeftArrow,          Key_DownArrow,            Key_UpArrow,              Key_RightArrow,  ___,              ___,
    Key_PcApplication,          Consumer_Mute,          Consumer_VolumeDecrement, Consumer_VolumeIncrement, ___,             Key_Backslash,    Key_Pipe,
@@ -309,6 +274,32 @@ static void anyKeyMacro(uint8_t keyState) {
     kaleidoscope::hid::pressKey(lastKey);
 }
 
+void composeTapKey(Key key, bool shift_state = false) {
+  if (shift_state && key.keyCode >= Key_A.keyCode && key.keyCode <= Key_Z.keyCode) {
+    kaleidoscope::hid::pressKey(Key_LeftShift);
+  }
+  kaleidoscope::hid::pressKey(key);
+  kaleidoscope::hid::sendKeyboardReport();
+  kaleidoscope::hid::releaseKey(key);
+  kaleidoscope::hid::sendKeyboardReport();
+}
+
+void compose(Key a, Key b, bool shift_both = false) {
+  bool lshift = kaleidoscope::hid::wasModifierKeyActive(Key_LeftShift);
+  bool rshift = kaleidoscope::hid::wasModifierKeyActive(Key_RightShift);
+
+  kaleidoscope::hid::releaseKey(Key_LeftShift);
+  kaleidoscope::hid::releaseKey(Key_RightShift);
+
+  composeTapKey(Key_ScrollLock);
+  composeTapKey(a, shift_both && (lshift || rshift));
+  composeTapKey(b, lshift || rshift);
+
+  if (lshift)
+    kaleidoscope::hid::pressKey(Key_LeftShift);
+  if (rshift)
+    kaleidoscope::hid::pressKey(Key_RightShift);
+}
 
 /** macroAction dispatches keymap events that are tied to a macro
     to that macro. It takes two uint8_t parameters.
@@ -335,6 +326,27 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
 
   case MACRO_KEYBOARD_EMOJI:
     unicode(0x2328, keyState);
+    break;
+  }
+  case COMPOSE_AA:
+    if (keyToggledOn(keyState)) {
+      compose(Key_O, Key_A);
+    }
+    break;
+
+  case COMPOSE_AE:
+    if (keyToggledOn(keyState)) {
+      compose(Key_A, Key_E, true);
+    }
+    break;
+
+  case COMPOSE_OE:
+    if (keyToggledOn(keyState)) {
+      compose(Key_Slash, Key_O, true);
+    }
+    break;
+  case L_AA:
+    unicode(0x00e5, keyState);
     break;
   }
   return MACRO_NONE;
