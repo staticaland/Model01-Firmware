@@ -1,4 +1,5 @@
 // -*- mode: c++ -*-
+// vim: set ft=cpp foldmarker={{{,}}} foldmethod=marker foldlevel=0: //
 // Copyright 2016 Keyboardio, inc. <jesse@keyboard.io>
 // See "LICENSE" for license details
 
@@ -6,12 +7,7 @@
 #define BUILD_INFORMATION "locally built"
 #endif
 
-
-/**
- * These #include directives pull in the Kaleidoscope firmware core,
- * as well as the Kaleidoscope plugins we use in the Model 01's firmware
- */
-
+// Includes {{{
 
 // The Kaleidoscope core
 #include "Kaleidoscope.h"
@@ -73,6 +69,10 @@
 
 #include "Kaleidoscope-Unicode.h"
 
+// }}}
+
+// Macro enums {{{
+
 enum { MACRO_VERSION_INFO,
        MACRO_ANY,
        MACRO_KEYBOARD_EMOJI,
@@ -81,12 +81,13 @@ enum { MACRO_VERSION_INFO,
        COMPOSE_OE,
      };
 
+// }}}
+
 enum { PRIMARY, BOKMAL, NUMPAD, FUNCTION }; // layers
 
 #define PRIMARY_KEYMAP_QWERTY
-// #define PRIMARY_KEYMAP_COLEMAK
-// #define PRIMARY_KEYMAP_DVORAK
-// #define PRIMARY_KEYMAP_CUSTOM
+
+// Keymaps {{{
 
 // *INDENT-OFF*
 
@@ -158,14 +159,11 @@ KEYMAPS(
    Key_PcApplication,          Consumer_Mute,          Consumer_VolumeDecrement, Consumer_VolumeIncrement, ___,             Key_Backslash,    Key_Pipe,
    ___, ___, Key_Enter, ___,
    ___)
-	) // KEYMAPS(
+) // KEYMAPS(
+
+// }}}
 
 // *INDENT-ON*
-
-/** versionInfoMacro handles the 'firmware version info' macro
- *  When a key bound to the macro is pressed, this macro
- *  prints out the firmware build information as virtual keystrokes
- */
 
 static void unicode(uint32_t character, uint8_t keyState) {
   if (keyToggledOn(keyState)) {
@@ -268,9 +266,8 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
       compose(Key_Slash, Key_O, true);
     }
     break;
-
+  }
   return MACRO_NONE;
-}
 }
 
 // These 'solid' color effect definitions define a rainbow of
