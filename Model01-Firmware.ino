@@ -73,19 +73,6 @@
 
 #include "Kaleidoscope-Unicode.h"
 
-/** This 'enum' is a list of all the macros used by the Model 01's firmware
-  * The names aren't particularly important. What is important is that each
-  * is unique.
-  *
-  * These are the names of your macros. They'll be used in two places.
-  * The first is in your keymap definitions. There, you'll use the syntax
-  * `M(MACRO_NAME)` to mark a specific keymap position as triggering `MACRO_NAME`
-  *
-  * The second usage is in the 'switch' statement in the `macroAction` function.
-  * That switch statement actually runs the code associated with a macro when
-  * a macro key is pressed.
-  */
-
 enum { MACRO_VERSION_INFO,
        MACRO_ANY,
        MACRO_KEYBOARD_EMOJI,
@@ -94,74 +81,13 @@ enum { MACRO_VERSION_INFO,
        COMPOSE_OE,
      };
 
-/** The Model 01's key layouts are defined as 'keymaps'. By default, there are three
-  * keymaps: The standard QWERTY keymap, the "Function layer" keymap and the "Numpad"
-  * keymap.
-  *
-  * Each keymap is defined as a list using the 'KEYMAP_STACKED' macro, built
-  * of first the left hand's layout, followed by the right hand's layout.
-  *
-  * Keymaps typically consist mostly of `Key_` definitions. There are many, many keys
-  * defined as part of the USB HID Keyboard specification. You can find the names
-  * (if not yet the explanations) for all the standard `Key_` defintions offered by
-  * Kaleidoscope in these files:
-  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/key_defs_keyboard.h
-  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/key_defs_consumerctl.h
-  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/key_defs_sysctl.h
-  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/key_defs_keymaps.h
-  *
-  * Additional things that should be documented here include
-  *   using ___ to let keypresses fall through to the previously active layer
-  *   using XXX to mark a keyswitch as 'blocked' on this layer
-  *   using ShiftToLayer() and LockLayer() keys to change the active keymap.
-  *   the special nature of the PROG key
-  *   keeping NUM and FN consistent and accessible on all layers
-  *
-  *
-  * The "keymaps" data structure is a list of the keymaps compiled into the firmware.
-  * The order of keymaps in the list is important, as the ShiftToLayer(#) and LockLayer(#)
-  * macros switch to key layers based on this list.
-  *
-  *
-
-  * A key defined as 'ShiftToLayer(FUNCTION)' will switch to FUNCTION while held.
-  * Similarly, a key defined as 'LockLayer(NUMPAD)' will switch to NUMPAD when tapped.
-  */
-
-/**
-  * Layers are "0-indexed" -- That is the first one is layer 0. The second one is layer 1.
-  * The third one is layer 2.
-  * This 'enum' lets us use names like QWERTY, FUNCTION, and NUMPAD in place of
-  * the numbers 0, 1 and 2.
-  *
-  */
-
 enum { PRIMARY, BOKMAL, NUMPAD, FUNCTION }; // layers
-
-
-/**
-  * To change your keyboard's layout from QWERTY to DVORAK or COLEMAK, comment out the line
-  *
-  * #define PRIMARY_KEYMAP_QWERTY
-  *
-  * by changing it to
-  *
-  * // #define PRIMARY_KEYMAP_QWERTY
-  *
-  * Then uncomment the line corresponding to the layout you want to use.
-  *
-  */
 
 #define PRIMARY_KEYMAP_QWERTY
 // #define PRIMARY_KEYMAP_COLEMAK
 // #define PRIMARY_KEYMAP_DVORAK
 // #define PRIMARY_KEYMAP_CUSTOM
 
-
-
-/* This comment temporarily turns off astyle's indent enforcement
- *   so we can make the keymaps actually resemble the physical key layout better
- */
 // *INDENT-OFF*
 
 KEYMAPS(
@@ -187,8 +113,6 @@ KEYMAPS(
 #error "No default keymap defined. You should make sure that you have a line like '#define PRIMARY_KEYMAP_QWERTY' in your sketch"
 
 #endif 
-
-
 
   [NUMPAD] =  KEYMAP_STACKED
   (___, ___, ___, ___, ___, ___, ___,
@@ -236,7 +160,6 @@ KEYMAPS(
    ___)
 	) // KEYMAPS(
 
-/* Re-enable astyle's indent enforcement */
 // *INDENT-ON*
 
 /** versionInfoMacro handles the 'firmware version info' macro
@@ -348,8 +271,7 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
 
   return MACRO_NONE;
 }
-
-
+}
 
 // These 'solid' color effect definitions define a rainbow of
 // LED color modes calibrated to draw 500mA or less on the
