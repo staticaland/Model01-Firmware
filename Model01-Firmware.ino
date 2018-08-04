@@ -327,6 +327,7 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
   case MACRO_KEYBOARD_EMOJI:
     unicode(0x2328, keyState);
     break;
+
   case COMPOSE_AA:
     if (keyToggledOn(keyState)) {
       compose(Key_O, Key_A);
@@ -344,10 +345,7 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
       compose(Key_Slash, Key_O, true);
     }
     break;
-  case L_AA:
-    unicode(0x00e5, keyState);
-    break;
-  }
+
   return MACRO_NONE;
 }
 
